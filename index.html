@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Village</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/icon2.png">
+</head>
+<body>
+   <div class="main_container">
+
+    <div class="sky" id="sky"></div>
+
+    <div class="content">   
+        <button id="toggleButton">Day/Night</button>
+    </div>
+    
+
+
+    <div class="container" id="day">
+        <img class="day-img" id="sun" src="images/sun1.gif">
+        <img class="day-img" src="images/DAY.png">
+        <!-- <img class="day-img" src="images/running car1.gif"> -->
+    </div>
+
+    <div class="container" id="night">
+        <img class="night-img" id="moon" src="images/moon3.gif">
+        <img class="night-img" src="images/NIGHT.png">
+        <!-- <img class="night-img" src="images/Stopped car.png"> -->
+    </div>
+
+
+    <script>
+         
+        window.onload = function() {
+            let hour = new Date().getHours();
+            if (hour >= 6 && hour < 18) {
+                setDayTime(); 
+            } else {
+                setNightTime(); 
+            }
+        };
+
+
+        document.getElementById("toggleButton").addEventListener("click", toggleTime);
+
+        function toggleTime() {
+           if (document.body.classList.contains("day-mode")) {
+              setNightTime();
+          } else {
+               setDayTime();
+          }
+        }
+
+
+
+        function setDayTime() {
+            document.body.classList.remove("night-mode");
+            document.body.classList.add("day-mode");
+
+            document.getElementById("day").style.display = "block";
+            document.getElementById("night").style.display = "none";
+
+            document.querySelectorAll(".star").forEach(star => star.style.display = "none");
+            document.querySelectorAll(".cloud").forEach(cloud => cloud.style.display = "block");
+        }
+
+        function setNightTime() {
+            document.body.classList.remove("day-mode");
+            document.body.classList.add("night-mode");
+
+            document.getElementById("day").style.display = "none";
+            document.getElementById("night").style.display = "block";
+
+            document.querySelectorAll(".star").forEach(star => star.style.display = "block");
+            document.querySelectorAll(".cloud").forEach(cloud => cloud.style.display = "none");
+        }
+
+    
+
+        function createStar() {
+            let star = document.createElement("div");
+            star.classList.add("star");
+            star.style.top = Math.random() * 350 + "px";
+            star.style.left = Math.random() * window.innerWidth + "px";
+            document.getElementById("sky").appendChild(star);
+        }
+
+        function createCloud() {
+            let cloud = document.createElement("div");
+            cloud.classList.add("cloud");
+            cloud.style.top = Math.random() * 400 + "px";
+            cloud.style.left = "-200px";
+            document.getElementById("sky").appendChild(cloud);
+        }
+
+        for (let i = 80; i--; ) createStar();
+        for (let i = -10; i++; ) createCloud();
+    </script>
+
+</div>
+</body>
+</html>
